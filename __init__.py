@@ -69,8 +69,8 @@ def main(
       len(pipes) > 1
       and birds[0].x > pipes[0].top_pipe.x + pipes[0].TOP_PIPE_SPRITE.get_width()
     ):
-      pipes[1]
-
+      next_pipe = pipes[1]
+    print(next_pipe.top_pipe.y)
     for bird in birds:
       if NEAT_IS_RUNNING:
         bird.update(next_pipe)
