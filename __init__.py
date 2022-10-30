@@ -7,6 +7,7 @@ from config import SCREEN_HEIGHT, SCREEN_WIDTH, FONT_SIZE, NEAT_IS_RUNNING
 from entities import Bird, Floor, Pipe
 
 def main():
+  # setup
   pygame.font.init()
   neat_generation=1
   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -20,7 +21,10 @@ def main():
     score = 0
     # generation_entities
     pipes = [Pipe(700)]
-    birds = [Bird(350)]
+    if NEAT_IS_RUNNING:
+      pass
+    else:
+      birds = [Bird(350)]
     # generation_run
     while len(birds):
       clock.tick(30)

@@ -28,19 +28,19 @@ class Bird:
     self.altura = self.y
 
   def update(self):
-    # calcular o distance
+    # distance_calc
     self.ticks += 1
     distance = 1.5 * (self.ticks**2) + self.speed * self.ticks
-    # restringir o distance
+    # distance_clamp
     if distance > 16:
       distance = 16
     elif distance < 0:
       distance -= 2
     self.y += distance
-    # o angulo do passaro
-    if distance < 0 or self.y < (self.altura + 50):
-      if self.angle < self.ROTACAO_MAXIMA:
-        self.angle = self.ROTACAO_MAXIMA
+    # bird_angle
+    print(f"distance {distance}, angle {self.angle}\n")
+    if distance < 16:
+      self.angle = self.ROTACAO_MAXIMA
     else:
       if self.angle > -90:
         self.angle -= self.VELOCIDADE_ROTACAO
@@ -60,10 +60,10 @@ class Bird:
       self.sprite = self.SPRITES[sprite_index]
         
     # draw a imagem
-    imagem_rotacionada = pygame.transform.rotate(self.sprite, self.angle)
-    pos_centro_imagem = self.sprite.get_rect(topleft=(self.x, self.y)).center
-    rect = imagem_rotacionada.get_rect(center=pos_centro_imagem)
-    tela.blit(imagem_rotacionada, rect.topleft)
+    sprite_rotated = pygame.transform.rotate(self.sprite, self.angle)
+    sprite_center_position = self.sprite.get_rect(topleft=(self.x, self.y)).center
+    rect = sprite_rotated.get_rect(center=sprite_center_position)
+    tela.blit(sprite_rotated, rect.topleft)
 
   def get_mask(self):
     return pygame.mask.from_surface(self.sprite)
