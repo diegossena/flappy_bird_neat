@@ -115,5 +115,7 @@ if __name__ == '__main__':
       neat.DefaultStagnation,
       "neat.ini"
     )
+    population = neat.Population(config)
+    population.run(main, 50)
   else:
     main(0, 0)
