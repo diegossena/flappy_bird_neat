@@ -87,6 +87,7 @@ def main(
     for bird in birds:
       # bird - floor collision
       if (bird.y + bird.sprite.get_height()) > floor.y or bird.y < 0:
+        bird.genoma.fitness -= 5
         birds.remove(bird)
     # screen_draw
     screen.blit(sprite_get('bg.png'), (0, 0))
