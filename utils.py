@@ -10,7 +10,7 @@ def sprite_get(img_name: str):
     # if(img_name.startswith('bg')):
     #   width = SCREEN_WIDTH
     #   height = SCREEN_HEIGHT
-    # elif(img_name.startswith('bird')):
+    # elif(img_name.startswith('entity1')):
     #   return pygame.transform.scale2x(surface);
     # else:
     #   width = surface.get_width() * SCALE

@@ -6,7 +6,7 @@ import neat
 from utils import sprite_get
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, FONT_SIZE, NEAT_IS_RUNNING
 
-from entities import Bird, BirdAI, Floor, Pipe
+from entities import Bird, BirdAI, Floor, Pipes
 # Iterator[Tuple[int, neat.DefaultGenome]]
 # list[tuple[int, neat.DefaultGenome]]
 def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config):
@@ -25,7 +25,7 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
     # setup    
     score = 0
     # generation_entities
-    pipes = [Pipe(700)]
+    pipes = [Pipes(700)]
     if NEAT_IS_RUNNING:
       birds = [
         BirdAI(
@@ -50,33 +50,30 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
               for bird in birds:
                 bird.jump()
       # entities_update
+      floor.update()
+
       for bird in birds:
         bird.update()
 
-      floor.update()
-      adding_pipe = False
-      pipes_to_remove = []
       for pipe in pipes:
-        for i, bird in enumerate(birds):
-          if pipe.collission(bird):
-            birds.pop(i)
-          if not pipe.passed and bird.x > pipe.x:
-            pipe.passed = True
-            adding_pipe = True
+        if not pipe.passed and birds[0].x > pipe.top_pipe.x:
+          pipe.passed = True
+          score += 1
+          pipes.append(Pipes(600))
+        if pipe.top_pipe.x + pipe.TOP_PIPE_SPRITE.get_width() < 0:
+          pipes.remove(pipe)
         pipe.update()
-        if pipe.x + pipe.CANO_TOPO.get_width() < 0:
-          pipes_to_remove.append(pipe)
-
-      if adding_pipe:
-        score += 1
-        pipes.append(Pipe(600))
-
-      for pipe in pipes_to_remove:
-        pipes.remove(pipe)
-
-      for i, bird in enumerate(birds):
+      # collisions
+      for bird in birds:
+        for pipe in pipes:
+          if (
+            bird.collision(pipe.top_pipe)
+            or bird.collision(pipe.bottom_pipe)
+          ):
+            birds.remove(bird)
+      for bird in birds:
         if (bird.y + bird.sprite.get_height()) > floor.y or bird.y < 0:
-          birds.pop(i)
+          birds.remove(bird)
       # screen_draw
       screen.blit(sprite_get('bg.png'), (0, 0))
 
@@ -98,4 +95,4 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
       neat_generation += 1
 
 if __name__ == '__main__':
-  main()
+  main(0, 0)

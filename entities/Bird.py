@@ -2,9 +2,10 @@ import math
 import pygame
 import neat
 
+from .Entity import Entity
 from utils import sprite_get
 
-class Bird:
+class Bird(Entity):
   SPRITES = [
     sprite_get(f"bird{i}.png")
     for i in range(1, 4)
@@ -42,13 +43,13 @@ class Bird:
     SPRITE_TRANSITION_DURATION = 5
     self.sprite_tick += 1
     # select sprite
-    sprite_index = math.floor(self.sprite_tick / self.SPRITE_TRANSITION_DURATION) % 3
+    sprite_index = math.floor(self.sprite_tick / SPRITE_TRANSITION_DURATION) % 3
     if(sprite_index == 0):
       self.sprite_tick = 0
     # se o passaro tiver caindo eu não vou bater asa
     if self.angle <= -80:
       self.sprite = self.SPRITES[1]
-      self.sprite_index = self.SPRITE_TRANSITION_DURATION*2
+      self.sprite_index = SPRITE_TRANSITION_DURATION*2
     else:
       self.sprite = self.SPRITES[sprite_index]
         
@@ -58,13 +59,8 @@ class Bird:
     rect = sprite_rotated.get_rect(center=sprite_center_position)
     tela.blit(sprite_rotated, rect.topleft)
 
-  def get_mask(self):
-    return pygame.mask.from_surface(self.sprite)
-
 class BirdAI(Bird):
   def __init__(self, genoma: neat.DefaultGenome, config: neat.Config):
     self.network = neat.nn.FeedForwardNetwork.create(genoma, config)
     genoma.fitness = 0
     self.__genoma = genoma
-
-bird = BirdAI()

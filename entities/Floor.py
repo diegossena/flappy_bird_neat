@@ -1,4 +1,5 @@
 import pygame
+
 from utils import sprite_get
 
 class Floor:
