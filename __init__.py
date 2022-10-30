@@ -58,6 +58,9 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
           pipe.passed = True
           score += 1
           pipes.append(Pipes(screen=screen,x=600))
+          if NEAT_IS_RUNNING:
+            for bird in birds:
+              bird.genoma.fitness += 5
         if pipe.top_pipe.x + pipe.TOP_PIPE_SPRITE.get_width() < 0:
           pipes.remove(pipe)
         pipe.update()
@@ -79,6 +82,8 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
             bird.collision(pipe.top_pipe)
             or bird.collision(pipe.bottom_pipe)
           ):
+            if NEAT_IS_RUNNING:
+              bird.genoma.fitness -= 1
             birds.remove(bird)
       for bird in birds:
         # bird - floor collision

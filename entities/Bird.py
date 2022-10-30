@@ -65,11 +65,11 @@ class BirdAI(Bird):
     super(screen=screen)
     self.network = neat.nn.FeedForwardNetwork.create(genoma, config)
     genoma.fitness = 0
-    self.__genoma = genoma
+    self.genoma = genoma
   
   def update(self, next_pipe):
     Bird.update(self)
-    self.__genoma.fitness += .1
+    self.genoma.fitness += .1
     output = self.network.activate((
       self.y,
       next_pipe.top_pipe.y + next_pipe.TOP_PIPE_SPRITE.get_height(),
