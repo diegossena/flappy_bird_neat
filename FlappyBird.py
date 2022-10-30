@@ -233,11 +233,6 @@ def main(genomas, config): # fitness function
             passaro.mover()
             # aumentar um pouquinho a fitness do passaro
             lista_genomas[i].fitness += 0.1
-            print( (
-                passaro.y,
-                abs(passaro.y - canos[indice_cano].altura),
-                abs(passaro.y - canos[indice_cano].pos_base)
-            ))
             output = redes[i].activate((passaro.y,
                                         abs(passaro.y - canos[indice_cano].altura),
                                         abs(passaro.y - canos[indice_cano].pos_base)))

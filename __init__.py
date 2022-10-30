@@ -64,13 +64,16 @@ def main(
         pipes.remove(pipe)
       pipe.update()
 
+    next_pipe = pipes[0]
+    if (
+      len(pipes) > 1
+      and birds[0].x > pipes[0].top_pipe.x + pipes[0].TOP_PIPE_SPRITE.get_width()
+    ):
+      pipes[1]
+
     for bird in birds:
       if NEAT_IS_RUNNING:
-        for pipe in pipes:
-          if pipe.passed:
-            continue
-          bird.update(pipe)
-          break
+        bird.update(next_pipe)
       else:
         bird.update()
     # collisions
