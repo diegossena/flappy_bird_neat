@@ -62,7 +62,7 @@ class Bird(Entity):
 
 class BirdAI(Bird):
   def __init__(self, screen: pygame.Surface, genoma: neat.DefaultGenome, config: neat.Config):
-    super(screen=screen)
+    Bird.__init__(screen=screen) 
     self.network = neat.nn.FeedForwardNetwork.create(genoma, config)
     genoma.fitness = 0
     self.genoma = genoma

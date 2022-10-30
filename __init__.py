@@ -118,4 +118,4 @@ if __name__ == '__main__':
     population = neat.Population(config)
     population.run(main, 50)
   else:
-    main(0, 0)
+    main(None, None)
