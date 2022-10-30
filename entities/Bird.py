@@ -72,9 +72,14 @@ class BirdAI(Bird):
     self.genoma.fitness += .1
     output = self.network.activate((
       self.y,
-      next_pipe.top_pipe.y + next_pipe.TOP_PIPE_SPRITE.get_height(),
-      next_pipe.bottom_pipe.y
+      abs(self.y - (next_pipe.bottom_pipe.y - next_pipe.DISTANCE)),
+      abs(self.y - next_pipe.bottom_pipe.y)
     ))
+    # print((
+    #   self.y,
+    #   abs(self.y - (next_pipe.bottom_pipe.y - next_pipe.DISTANCE)),
+    #   abs(self.y - next_pipe.bottom_pipe.y)
+    # ))
     # -1 ~ 1
     if output[0] > .5:
       self.jump()
