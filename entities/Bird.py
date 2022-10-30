@@ -65,4 +65,6 @@ class BirdAI(Bird):
   def __init__(self, genoma: neat.DefaultGenome, config: neat.Config):
     self.network = neat.nn.FeedForwardNetwork.create(genoma, config)
     genoma.fitness = 0
-    self.genoma = genoma
+    self.__genoma = genoma
+
+bird = BirdAI()

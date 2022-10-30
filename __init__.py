@@ -7,6 +7,8 @@ from utils import sprite_get
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, FONT_SIZE, NEAT_IS_RUNNING
 
 from entities import Bird, BirdAI, Floor, Pipe
+# Iterator[Tuple[int, neat.DefaultGenome]]
+# list[tuple[int, neat.DefaultGenome]]
 def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config):
   # setup
   pygame.font.init()
@@ -42,10 +44,11 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
         if event.type == pygame.QUIT:
           pygame.quit()
           quit()
-        if event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_SPACE:
-            for bird in birds:
-              bird.jump()
+        if not NEAT_IS_RUNNING:
+          if  event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+              for bird in birds:
+                bird.jump()
       # entities_update
       for bird in birds:
         bird.update()
