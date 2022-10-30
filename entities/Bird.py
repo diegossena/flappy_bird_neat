@@ -31,13 +31,16 @@ class Bird:
       distance -= 2
     self.y += distance
     # bird_angle
+    ANGLE_MAX = 25
+    ANGLE_MIN = -90
+    ANGLE_TRANSITION = 10
     if distance < 0:
-      self.angle = 25
-    elif self.angle > -90:
-      self.angle = max(self.angle - 10, -90)
+      self.angle = ANGLE_MAX
+    elif self.angle > ANGLE_MIN:
+      self.angle = max(self.angle - ANGLE_TRANSITION, ANGLE_MIN)
 
   def draw(self, tela):
-    self.sprite_tick += 1;
+    self.sprite_tick += 1
     # definir qual imagem do passaro vai usar
     sprite_index = math.floor(self.sprite_tick / self.TRANSITION_DURATION) % 3
     if(sprite_index == 0):
