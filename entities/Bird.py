@@ -29,7 +29,7 @@ class Bird:
     distance = min(1.5 * (self.ticks**2) + self.speed * self.ticks, 16)
     if distance < 0:
       distance -= 2
-    self.y += distanc
+    self.y += distance
     # bird_angle
     if distance < 0:
       self.angle = 25
