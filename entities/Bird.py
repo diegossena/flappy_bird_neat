@@ -68,6 +68,7 @@ class BirdAI(Bird):
     self.__genoma = genoma
   
   def update(self, next_pipe):
+    Bird.update(self)
     self.__genoma.fitness += .1
     output = self.network.activate((
       self.y,
