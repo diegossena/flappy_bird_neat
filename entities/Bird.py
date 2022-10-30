@@ -17,7 +17,7 @@ class Bird:
     self.y = coord_y
     self.angle = 0
     self.speed = 0
-    self.altura = self.y
+    self.jump_altitude = self.y
     self.ticks = 0
     self.sprite = self.SPRITES[0]
     self.sprite_tick = 0
@@ -25,25 +25,21 @@ class Bird:
   def jump(self):
     self.speed = -10.5
     self.ticks = 0
-    self.altura = self.y
+    self.jump_altitude = self.y
 
   def update(self):
     # distance_calc
     self.ticks += 1
-    distance = 1.5 * (self.ticks**2) + self.speed * self.ticks
-    # distance_clamp
-    if distance > 16:
-      distance = 16
-    elif distance < 0:
+    distance = min(1.5 * (self.ticks**2) + self.speed * self.ticks, 16)
+    if distance < 0:
       distance -= 2
     self.y += distance
     # bird_angle
-    print(f"distance {distance}, angle {self.angle}\n")
-    if distance < 16:
+    if self.y < self.jump_altitude:
       self.angle = self.ROTACAO_MAXIMA
-    else:
-      if self.angle > -90:
-        self.angle -= self.VELOCIDADE_ROTACAO
+    elif self.angle > -90:
+      self.angle -= self.VELOCIDADE_ROTACAO
+    print(f"altitude: {self.jump_altitude}, distance {distance}, angle {self.angle}\n")
 
   def draw(self, tela):
     self.sprite_tick += 1;
