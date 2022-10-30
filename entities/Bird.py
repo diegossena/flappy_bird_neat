@@ -9,15 +9,12 @@ class Bird:
   ]
   x = 230
   # animações da rotação
-  ROTACAO_MAXIMA = 25
-  VELOCIDADE_ROTACAO = 20
   TRANSITION_DURATION = 5
 
   def __init__(self, coord_y):
     self.y = coord_y
     self.angle = 0
     self.speed = 0
-    self.jump_altitude = self.y
     self.ticks = 0
     self.sprite = self.SPRITES[0]
     self.sprite_tick = 0
@@ -25,7 +22,6 @@ class Bird:
   def jump(self):
     self.speed = -10.5
     self.ticks = 0
-    self.jump_altitude = self.y
 
   def update(self):
     # distance_calc
@@ -33,13 +29,12 @@ class Bird:
     distance = min(1.5 * (self.ticks**2) + self.speed * self.ticks, 16)
     if distance < 0:
       distance -= 2
-    self.y += distance
+    self.y += distanc
     # bird_angle
-    if self.y < self.jump_altitude:
-      self.angle = self.ROTACAO_MAXIMA
+    if distance < 0:
+      self.angle = 25
     elif self.angle > -90:
-      self.angle -= self.VELOCIDADE_ROTACAO
-    print(f"altitude: {self.jump_altitude}, distance {distance}, angle {self.angle}\n")
+      self.angle = max(self.angle - 10, -90)
 
   def draw(self, tela):
     self.sprite_tick += 1;
