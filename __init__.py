@@ -1,18 +1,21 @@
+from typing import *
+
 import pygame
 import neat
 
 from utils import sprite_get
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, FONT_SIZE, NEAT_IS_RUNNING
 
-from entities import Bird, Floor, Pipe
-
-def main():
+from entities import Bird, BirdAI, Floor, Pipe
+def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config):
   # setup
   pygame.font.init()
-  neat_generation=1
   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
   text_font=pygame.font.SysFont('arial', FONT_SIZE)
   clock = pygame.time.Clock()
+  # ai setup
+  if NEAT_IS_RUNNING:
+    neat_generation=1
   # static_entities
   floor = Floor()
   # game_start
@@ -22,9 +25,15 @@ def main():
     # generation_entities
     pipes = [Pipe(700)]
     if NEAT_IS_RUNNING:
-      pass
+      birds = [
+        BirdAI(
+          genoma=genoma,
+          config=config
+        )
+        for _, genoma in genomas
+      ]
     else:
-      birds = [Bird(350)]
+      birds = [Bird()]
     # generation_run
     while len(birds):
       clock.tick(30)
@@ -82,7 +91,8 @@ def main():
       floor.draw(screen)
       pygame.display.update()
     # on fail
-    neat_generation += 1
+    if NEAT_IS_RUNNING:
+      neat_generation += 1
 
 if __name__ == '__main__':
   main()

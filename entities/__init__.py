@@ -1,3 +1,3 @@
-from .Bird import Bird
-from .Floor import Floor
-from .Pipe import Pipe
+from .Bird import *
+from .Floor import *
+from .Pipe import *
