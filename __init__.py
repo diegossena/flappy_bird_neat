@@ -21,7 +21,7 @@ def main(neat_generation = 0):
   score = 0
   clock = pygame.time.Clock()
   # run
-  while True:
+  while len(birds):
     clock.tick(30)
     # handle inputs
     for event in pygame.event.get():
