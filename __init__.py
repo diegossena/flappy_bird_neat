@@ -53,9 +53,6 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
       # entities_update
       floor.update()
 
-      for bird in birds:
-        bird.update()
-
       for pipe in pipes:
         if not pipe.passed and birds[0].x > pipe.top_pipe.x:
           pipe.passed = True
@@ -64,6 +61,16 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
         if pipe.top_pipe.x + pipe.TOP_PIPE_SPRITE.get_width() < 0:
           pipes.remove(pipe)
         pipe.update()
+
+      for bird in birds:
+        if NEAT_IS_RUNNING:
+          for pipe in pipes:
+            if pipe.passed:
+              continue
+            bird.update(pipe)
+            break
+        else:
+          bird.update()
       # collisions
       for bird in birds:
         # bird - pipes collision
