@@ -66,6 +66,7 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
         pipe.update()
       # collisions
       for bird in birds:
+        # bird - pipes collision
         for pipe in pipes:
           if (
             bird.collision(pipe.top_pipe)
@@ -73,6 +74,7 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
           ):
             birds.remove(bird)
       for bird in birds:
+        # bird - floor collision
         if (bird.y + bird.sprite.get_height()) > floor.y or bird.y < 0:
           birds.remove(bird)
       # screen_draw
