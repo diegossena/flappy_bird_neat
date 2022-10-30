@@ -29,9 +29,9 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
     if NEAT_IS_RUNNING:
       birds = [
         BirdAI(
+          screen=screen,
           genoma=genoma,
           config=config,
-          screen=screen
         )
         for _, genoma in genomas
       ]

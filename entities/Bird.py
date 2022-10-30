@@ -61,7 +61,20 @@ class Bird(Entity):
     self.screen.blit(sprite_rotated, rect.topleft)
 
 class BirdAI(Bird):
-  def __init__(self, genoma: neat.DefaultGenome, config: neat.Config):
+  def __init__(self, screen: pygame.Surface, genoma: neat.DefaultGenome, config: neat.Config):
+    super(screen=screen)
     self.network = neat.nn.FeedForwardNetwork.create(genoma, config)
     genoma.fitness = 0
     self.__genoma = genoma
+  
+  def update(self, next_pipe):
+    self.__genoma.fitness += .1
+    output = self.network.activate((
+      self.y,
+      next_pipe.top_pipe.y + next_pipe.TOP_PIPE_SPRITE.get_height(),
+      next_pipe.bottom_pipe.y
+    ))
+    # -1 ~ 1
+    if output[0] > .5:
+      self.jump()
+    pass
