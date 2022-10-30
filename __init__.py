@@ -19,23 +19,24 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
   if NEAT_IS_RUNNING:
     neat_generation=1
   # static_entities
-  floor = Floor()
+  floor = Floor(screen=screen)
   # game_start
   while 1:
     # setup    
     score = 0
     # generation_entities
-    pipes = [Pipes(700)]
+    pipes = [Pipes(screen=screen,x=700)]
     if NEAT_IS_RUNNING:
       birds = [
         BirdAI(
           genoma=genoma,
-          config=config
+          config=config,
+          screen=screen
         )
         for _, genoma in genomas
       ]
     else:
-      birds = [Bird()]
+      birds = [Bird(screen=screen)]
     # generation_run
     while len(birds):
       clock.tick(30)
@@ -59,7 +60,7 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
         if not pipe.passed and birds[0].x > pipe.top_pipe.x:
           pipe.passed = True
           score += 1
-          pipes.append(Pipes(600))
+          pipes.append(Pipes(screen=screen,x=600))
         if pipe.top_pipe.x + pipe.TOP_PIPE_SPRITE.get_width() < 0:
           pipes.remove(pipe)
         pipe.update()
@@ -76,19 +77,16 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
           birds.remove(bird)
       # screen_draw
       screen.blit(sprite_get('bg.png'), (0, 0))
-
       for bird in birds:
-        bird.draw(screen)
+        bird.draw()
       for pipe in pipes:
-        pipe.draw(screen)
-
+        pipe.draw()
       text = text_font.render(f"Pontuação: {score}", 1, (255, 255, 255))
       screen.blit(text, (SCREEN_WIDTH - 10 - text.get_width(), 10))
       if NEAT_IS_RUNNING:
         text = text_font.render(f"Geração: {neat_generation}", 1, (255, 255, 255))
         screen.blit(text, (10, 10))
-
-      floor.draw(screen)
+      floor.draw()
       pygame.display.update()
     # on fail
     if NEAT_IS_RUNNING:

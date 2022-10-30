@@ -8,9 +8,10 @@ class Floor:
   LARGURA = SPRITE.get_width()
   IMAGEM = SPRITE
   y = 730
-  def __init__(self):
+  def __init__(self, screen: pygame.Surface):
     self.x1 = 0
     self.x2 = self.LARGURA
+    self.screen = screen
   
   def update(self):
     self.x1 -= self.VELOCIDADE
@@ -20,6 +21,6 @@ class Floor:
     if self.x2 + self.LARGURA < 0:
       self.x2 = self.x1 + self.LARGURA
 
-  def draw(self, tela):
-    tela.blit(self.IMAGEM, (self.x1, self.y))
-    tela.blit(self.IMAGEM, (self.x2, self.y))
+  def draw(self):
+    self.screen.blit(self.IMAGEM, (self.x1, self.y))
+    self.screen.blit(self.IMAGEM, (self.x2, self.y))

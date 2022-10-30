@@ -11,13 +11,14 @@ class Bird(Entity):
     for i in range(1, 4)
   ]
   x = 230
-  def __init__(self):
+  def __init__(self, screen: pygame.Surface):
+    self.screen = screen
+    self.ticks = 0
+    self.sprite_tick = 0
+    self.sprite = self.SPRITES[0]
     self.y = 350
     self.angle = 0
     self.speed = 0
-    self.ticks = 0
-    self.sprite = self.SPRITES[0]
-    self.sprite_tick = 0
 
   def jump(self):
     self.speed = -10.5
@@ -39,7 +40,7 @@ class Bird(Entity):
     elif self.angle > ANGLE_MIN:
       self.angle = max(self.angle - ANGLE_TRANSITION, ANGLE_MIN)
 
-  def draw(self, tela):
+  def draw(self):
     SPRITE_TRANSITION_DURATION = 5
     self.sprite_tick += 1
     # select sprite
@@ -57,7 +58,7 @@ class Bird(Entity):
     sprite_rotated = pygame.transform.rotate(self.sprite, self.angle)
     sprite_center_position = self.sprite.get_rect(topleft=(self.x, self.y)).center
     rect = sprite_rotated.get_rect(center=sprite_center_position)
-    tela.blit(sprite_rotated, rect.topleft)
+    self.screen.blit(sprite_rotated, rect.topleft)
 
 class BirdAI(Bird):
   def __init__(self, genoma: neat.DefaultGenome, config: neat.Config):

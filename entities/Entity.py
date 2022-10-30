@@ -1,10 +1,11 @@
 import pygame
 
 class Entity:
-  def __init__(self, x: int, y: int, sprite: pygame.Surface):
+  def __init__(self, screen: pygame.Surface, sprite: pygame.Surface, x: int, y: int):
     self.x = x
     self.y = y
     self.sprite = sprite
+    self.screen = screen
 
   def get_mask(self) -> pygame.Mask:
     return pygame.mask.from_surface(self.sprite)
@@ -18,19 +19,6 @@ class Entity:
     collide = self_mask.overlap(entity_mask, offset)
 
     return collide
-  # def collission(self, bird):
-  #   bird_mask = bird.get_mask()
 
-  #   top_mask = pygame.mask.from_surface(self.CANO_TOPO)
-  #   bottom_mask = pygame.mask.from_surface(self.CANO_BASE)
-
-  #   distancia_topo = (self.x - bird.x, self.pos_topo - round(bird.y))
-  #   distancia_base = (self.x - bird.x, self.pos_base - round(bird.y))
-
-  #   top_ponto = bird_mask.overlap(top_mask, distancia_topo)
-  #   bottom_ponto = bird_mask.overlap(bottom_mask, distancia_base)
-
-  #   if bottom_ponto or top_ponto:
-  #     return True
-  #   else:
-  #     return False
+  def draw(self):
+    self.screen.blit(self.sprite, (self.x, self.y))
