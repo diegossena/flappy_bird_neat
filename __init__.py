@@ -8,7 +8,7 @@ from Bird import Bird
 from Pipe import Pipe
 from Floor import Floor
 
-def main():
+def main(neat_generation = 0):
   # Fonts
   pygame.font.init()
   FONT_ARIAL = pygame.font.SysFont('arial', FONT_SIZE)
@@ -17,15 +17,11 @@ def main():
   birds = [Bird(350)]
   pipes = [Pipe(700)]
   # setup
-  screen = pygame.display.set_mode(
-    (SCREEN_WIDTH, SCREEN_HEIGHT)
-  )
+  screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
   score = 0
   clock = pygame.time.Clock()
-  if NEAT_IS_RUNNING:
-    neat_generation = 0
   # run
-  while len(birds):
+  while True:
     clock.tick(30)
     # handle inputs
     for event in pygame.event.get():
@@ -80,6 +76,7 @@ def main():
 
     floor.draw(screen)
     pygame.display.update()
+  main(neat_generation + 1)
 
 if __name__ == '__main__':
   main()
