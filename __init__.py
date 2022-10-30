@@ -107,4 +107,13 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
       neat_generation += 1
 
 if __name__ == '__main__':
-  main(0, 0)
+  if NEAT_IS_RUNNING:
+    config = neat.Config(
+      neat.DefaultGenome,
+      neat.DefaultReproduction,
+      neat.DefaultSpeciesSet,
+      neat.DefaultStagnation,
+      "neat.ini"
+    )
+  else:
+    main(0, 0)
