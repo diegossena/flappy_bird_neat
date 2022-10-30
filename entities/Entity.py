@@ -13,7 +13,7 @@ class Entity:
     self_mask = self.get_mask()
     entity_mask = entity.get_mask()
 
-    offset = (entity.x - self.x, entity.y - round(bird.y))
+    offset = (entity.x - self.x, entity.y - round(self.y))
 
     collide = self_mask.overlap(entity_mask, offset)
     if collide:
