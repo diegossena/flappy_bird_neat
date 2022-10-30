@@ -88,6 +88,7 @@ def main(genomas: Iterator[Tuple[int, neat.DefaultGenome]], config: neat.Config)
       for bird in birds:
         # bird - floor collision
         if (bird.y + bird.sprite.get_height()) > floor.y or bird.y < 0:
+          bird.genoma.fitness -= 2
           birds.remove(bird)
       # screen_draw
       screen.blit(sprite_get('bg.png'), (0, 0))
@@ -116,6 +117,12 @@ if __name__ == '__main__':
       "neat.ini"
     )
     population = neat.Population(config)
+    population.add_reporter(
+      neat.StdOutReporter(True)
+    )
+    population.add_reporter(
+      neat.StatisticsReporter()
+    )
     population.run(main, 50)
   else:
     main(None, None)
