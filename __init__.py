@@ -9,7 +9,7 @@ from config import SCREEN_HEIGHT, SCREEN_WIDTH, FONT_SIZE, NEAT_IS_RUNNING
 from entities import Bird, BirdAI, Floor, Pipes
 # setup
 pygame.font.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags = 0)
 text_font=pygame.font.SysFont('arial', FONT_SIZE)
 clock = pygame.time.Clock()
 neat_generation=1
